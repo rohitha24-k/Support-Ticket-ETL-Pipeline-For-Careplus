@@ -1,0 +1,27 @@
+## Incremental Data Loading into Amazon Redshift
+
+To ensure efficient and duplicate-free data loading, the pipeline implements an incremental loading strategy for Amazon Redshift.
+
+### Incremental Load Workflow
+
+1. New ticket or log data files are uploaded to Amazon S3.
+2. The S3 upload event automatically triggers an AWS Lambda function.
+3. The Lambda function connects to Amazon Redshift using the `psycopg2` library.
+4. Newly processed Parquet files are loaded into a Redshift **staging table** using the `COPY` command.
+5. An incremental **UPSERT** strategy is applied:
+   - Existing records with matching primary keys are deleted from the target table.
+   - New and updated records are inserted from the staging table.
+6. This approach ensures that only new or updated data is loaded, preventing duplicates.
+7. After successful loading, the staging table is cleared for the next batch.
+
+---
+
+### Benefits of This Approach
+
+- Loads **only new batches** when data arrives in S3  
+- Prevents duplicate records in the data warehouse  
+- Faster and cost-efficient data refresh  
+- Maintains an accurate **single source of truth** in Redshift  
+- Power BI dashboards automatically reflect the latest data  
+
+This incremental loading mechanism enables near real-time updates to analytics while keeping the data warehouse consistent and performant.
