@@ -1,0 +1,30 @@
+## Data Transformation
+
+Data transformation is handled differently for log files and ticket files based on their structure and processing requirements.
+
+### Log File Transformation (AWS Lambda)
+
+Unstructured support log files are transformed using an event-driven AWS Lambda function.
+
+- When a log file is uploaded to the S3 raw logs folder, an S3 event trigger invokes the Lambda function.
+- The Lambda function reads the log file, parses relevant fields such as timestamps, log level, and message content.
+- Lightweight transformations are applied to structure the log data.
+- The transformed data is converted into **Parquet format** for efficient storage and querying.
+- The Parquet files are written to a curated S3 location.
+
+This approach enables near real-time processing of log data without managing any servers.
+
+### Ticket Data Workflow (Structured Data)
+
+1. Support ticket CSV files are uploaded to the Amazon S3 raw zone.
+2. An S3 event trigger invokes an AWS Lambda function.
+3. The Lambda function programmatically starts an AWS Glue job.
+4. AWS Glue performs batch transformation, data cleaning, and schema normalization on the ticket data.
+5. Transformed ticket data is stored back in S3 and loaded into Amazon Redshift.
+
+### Why Different Transformation Approaches Were Used
+
+- **AWS Lambda** is used for log files because they are unstructured and require event-driven, lightweight processing.
+- **AWS Glue** is used for ticket files because they are structured and require scalable batch transformations.
+
+Using the right tool for each data type improves performance, scalability, and maintainability of the pipeline.
