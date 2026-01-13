@@ -1,3 +1,12 @@
-### Data Ingestion Output
+### Data Ingestion
 
-Screenshots included in this repository demonstrate successful ingestion of structured ticket data and automated processing of unstructured log files into Amazon S3, validating the event-driven Lambda workflow and data lake design.
+Data ingestion is handled using two independent Python-based workflows to address different data characteristics:
+
+- **Ticket Data Ingestion:**  
+  A Python script is used to ingest structured support ticket CSV files into the Amazon S3 raw zone. This approach enables batch-based ingestion and prepares the data for downstream transformation using AWS Glue.
+
+- **Log Data Ingestion:**  
+  A separate Python-based ingestion process is used for unstructured support log files. These log files are uploaded to Amazon S3, where an S3 event trigger invokes an AWS Lambda function for automated processing and conversion into Parquet format.
+
+This separation ensures modularity, scalability, and efficient handling of both structured and unstructured data.
+
