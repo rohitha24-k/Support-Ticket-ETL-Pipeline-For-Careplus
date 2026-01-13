@@ -1,0 +1,11 @@
+# Power BI Report
+
+This Power BI report consumes data from Amazon Redshift and visualizes curated support ticket and log data.
+
+## Key Features
+- Built on a centralized Redshift data warehouse
+- Uses pre-aggregated fact tables for performance
+- Supports near real-time refresh
+- Designed for management and operational reporting
+
+microsoft PowerBI :  https://app.powerbi.com/view?r=eyJrIjoiZDYxNDJmYmYtMGE0NC00MDg0LTllZGUtYjU2MmE2ZmEyNDMyIiwidCI6IjgwOGNjODNlLWE1NDYtNDdlNy1hMDNmLTczYTFlYmJhMjRmMyIsImMiOjEwfQ%3D%3D&pageName=6c49076e5d54167ab0c8
